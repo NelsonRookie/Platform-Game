@@ -23,14 +23,14 @@ class Player {
         this.velocity = {
             x: 0,
             y: 0
-          };
+        };
         this.width = proportionalSize(40);
         this.height = proportionalSize(40);
 
     }
     // use to create the characters
     draw() {
-        ctx.fillStyle = "#99c9ff" ;
+        ctx.fillStyle = "#99c9ff";
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
     // ensure that character are continually drawn on the screen
@@ -39,21 +39,21 @@ class Player {
         this.position += this.velocity.x;
         this.position.y += this.velocity.y;
 
-        if(this.position.y + this.height + this.velocity.y <= canvas.height) {
-            if(this.position.y < 0) {
+        if (this.position.y + this.height + this.velocity.y <= canvas.height) {
+            if (this.position.y < 0) {
                 this.position.y = 0;
                 this.velocity.y = gravity;
             }
             this.velocity.y = gravity;
-        }else {
+        } else {
             this.velocity.y = 0;
         }
 
-        if(this.position.y < this.width) {
+        if (this.position.y < this.width) {
             this.position.x = this.width
-        }  
+        }
 
-        if(this.position.x >= canvas.width - this.width * 2) {
+        if (this.position.x >= canvas.width - this.width * 2) {
             this.position.x = canvas.width - this.width * 2;
         }
     }
@@ -73,4 +73,19 @@ const animate = () => {
     //clear the canvas before the next animation
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     player.update();
+
+    // set player's velocity at position x(horizontal) to 5 if the rightKey was pressed, and set -5 if the leftKey was pressed.
+    if (keys.rightKey.pressed && player.position.x < proportionalSize(400)) {
+        player.velocity.x = 5;
+    } else if (keys.leftKey.pressed && player.position.x > proportionalSize(100)) {
+        player.velocity.x = -5
+    } else {
+        player.velocity.x = 0;
+    }
+}
+
+// use to monitor key press
+const keys = {
+    rightKey: { pressed: false },
+    leftKey: { pressed: false }
 }
