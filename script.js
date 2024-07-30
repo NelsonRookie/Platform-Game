@@ -89,3 +89,34 @@ const keys = {
     rightKey: { pressed: false },
     leftKey: { pressed: false }
 }
+
+const movePlayer = (key, xVelocity, isPressed) => {
+    if(!isCheckpointCollisionDetectionActive){
+        player.velocity.x = 0;
+        player.velocity.y = 0;
+        return;
+    }
+
+    // adding reference to the keys, thus it sets up the velocity at player's position x and y.
+    switch (key) {
+        case "ArrowLeft":
+          keys.leftKey.pressed = isPressed;
+          if (xVelocity === 0) {
+            player.velocity.x = xVelocity;
+          }
+          player.velocity.x -= xVelocity;
+          break;
+        case "ArrowUp":
+        case " ":
+        case "Spacebar":
+          player.velocity.y -= 8;
+          break;
+        case "ArrowRight":
+          keys.rightKey.pressed = isPressed;
+          if (xVelocity === 0) {
+            player.velocity.x = xVelocity;
+          }
+          player.velocity.x += xVelocity;
+      }
+
+}
